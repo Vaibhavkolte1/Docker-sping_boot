@@ -15,7 +15,8 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // Allow cookies
-        config.setAllowedOrigins(List.of("http://localhost:5173")); // Your frontend
+        config.setAllowedOrigins(List.of("http://localhost:5173",
+                                        "https://frontedd-for-spring-boot-4e8qng54i-vaibhavs-projects-a019b67a.vercel.app/")); // Your frontend
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("Set-Cookie")); // Expose cookies to frontend
