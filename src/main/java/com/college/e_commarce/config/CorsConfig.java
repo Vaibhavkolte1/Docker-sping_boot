@@ -16,7 +16,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // Allow cookies
         config.setAllowedOrigins(List.of("http://127.0.0.1:5173/",
-                "https://quick-mart-rho.vercel.app/",
+                "https://quickmart-flax-gamma.vercel.app",
                 "https://**")); // Your frontend
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
