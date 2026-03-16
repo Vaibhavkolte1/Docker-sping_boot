@@ -7,6 +7,7 @@ import com.college.e_commarce.entity.User;
 import com.college.e_commarce.repository.CartProductRepository;
 import com.college.e_commarce.repository.OrderRepository;
 import com.college.e_commarce.repository.ProductRepository;
+import com.college.e_commarce.service.ImageService;
 import com.college.e_commarce.service.SellerService;
 import com.college.e_commarce.util.AuthUtil;
 import jakarta.persistence.EntityManager;
@@ -14,6 +15,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,6 +28,7 @@ public class SellerServiceImpl implements SellerService {
     private final CartProductRepository cartProductRepository;
     private final OrderRepository orderRepository;
     private final AuthUtil authUtil;
+    private final ImageService imageService;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -52,7 +55,7 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public ProductResponseDto createProduct(ProductCreateDto dto) {
+    public ProductResponseDto createProduct(ProductCreateDto dto, MultipartFile image) throws Exception {
         if(productRepository.findByName(dto.getName()).isPresent()) {
             throw new RuntimeException("Product already exists.");
         }
@@ -64,7 +67,7 @@ public class SellerServiceImpl implements SellerService {
                 .description(dto.getDescription())
                 .price(dto.getPrice())
                 .stock(dto.getStock())
-                .image(dto.getImage())
+                .image(imageService.uploadImage(image))
                 .createdAt(LocalDateTime.now())
                 .seller(seller)
                 .build();

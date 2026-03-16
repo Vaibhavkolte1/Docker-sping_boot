@@ -5,9 +5,11 @@ import com.college.e_commarce.dto.ProductResponseDto;
 import com.college.e_commarce.service.SellerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,9 +26,10 @@ public class SellerController {
         return sellerService.getAllMyProducts();
     }
 
-    @PostMapping("/create-product")
-    public ResponseEntity<ProductResponseDto> createProduct(@Valid @RequestBody ProductCreateDto productCreateDto) {
-        return ResponseEntity.ok(sellerService.createProduct(productCreateDto));
+    @PostMapping(value = "/create-product", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ProductResponseDto> createProduct(@Valid @ModelAttribute ProductCreateDto productCreateDto,
+                                                            @RequestParam MultipartFile image) throws Exception {
+        return ResponseEntity.ok(sellerService.createProduct(productCreateDto, image));
     }
 
     @DeleteMapping("/delete-product")

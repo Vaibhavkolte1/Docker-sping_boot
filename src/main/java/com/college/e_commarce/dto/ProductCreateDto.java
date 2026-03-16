@@ -27,6 +27,4 @@ public class ProductCreateDto {
     @Min(value = 0)
     private int stock;
 
-    private String image;
-
 }
